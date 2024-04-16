@@ -1,4 +1,4 @@
-package com.example.apollo.database;
+package com.example.apollo.repository;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ public class DatabaseConnection {
 
     @Value("${db.url}")
     String connecString;
-
+    
     @Bean
     MongoClient mongoClient() {
         return MongoClients.create(connecString);
