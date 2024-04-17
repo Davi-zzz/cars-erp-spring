@@ -1,2 +1,2 @@
-# project uses factory, mongodb and 
+# project uses factory, mongodb, lombok annotations, 
 
