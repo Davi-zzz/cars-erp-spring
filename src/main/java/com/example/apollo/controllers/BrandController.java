@@ -8,6 +8,7 @@ import java.util.*;
 
 import com.example.apollo.models.Brand;
 import com.example.apollo.services.BrandsService;
+import com.example.apollo.utils.CustomResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,9 +46,9 @@ public class BrandController {
     }
 
     @DeleteMapping("")
-    public void delete(@RequestParam("id") String id) {
+    public CustomResponse delete(@RequestParam("id") String id) {
         service.delete(id);
-        // TODO: implements json return with msg
+        return new CustomResponse("Item successful deleted");
 
     }
 
