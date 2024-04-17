@@ -3,15 +3,15 @@ package com.example.apollo.models;
 import org.springframework.boot.jackson.JsonComponent;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.example.apollo.utils.annotations.UUID;
-
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @JsonComponent
 @Document
-public @Data class Cars {
+@EqualsAndHashCode(callSuper = false)
+public @Data class Car extends BaseModel {
 
-    public Cars(String id, String timestamp, String color, Fuel fuel, int year, int ports,
+    public Car(String id, String timestamp, String color, Fuel fuel, int year, int ports,
             Model model) {
         this.id = id;
         this.timestamp = timestamp;
@@ -22,12 +22,10 @@ public @Data class Cars {
         this.model = model;
     }
 
-    public Cars() {
+    public Car() {
 
     }
 
-    @UUID
-    String id;
     String timestamp;
     String color;
     Fuel fuel;
