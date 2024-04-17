@@ -11,4 +11,5 @@ public class Tools {
     public static String newUUID() {
         return UUID.randomUUID().toString();
     }
+
 }
