@@ -2,6 +2,7 @@ package com.example.apollo.controllers;
 
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import jakarta.validation.Valid;
 
 import java.util.*;
 
+@CrossOrigin(origins = "*")
 public class BaseController<T extends BaseModel> {
 
     @Autowired
@@ -28,7 +30,7 @@ public class BaseController<T extends BaseModel> {
     }
 
     @GetMapping("")
-    public Optional<T> index(@RequestParam String id) {
+    public Optional<T> findOne(@RequestParam String id) {
         return service.findById(id);
     }
 
@@ -50,7 +52,7 @@ public class BaseController<T extends BaseModel> {
     }
 
     @DeleteMapping("")
-    public CustomResponse delete(@RequestParam("id") String id) {
+    public CustomResponse delete(@RequestParam("id") String id) throws BadRequestException {
         service.delete(id);
         return new CustomResponse("Item successful deleted");
 
