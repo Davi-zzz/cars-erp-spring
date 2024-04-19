@@ -13,38 +13,36 @@ import com.example.apollo.repository.BrandRepository;
 @Service
 public class ModelService extends BaseService<Model> {
 
+    // TODO: refatorar a manipulacao de relacionamentos do projeto
+
     @Autowired
     private BrandRepository brandRepository;
 
-    private Boolean validateBrand(Brand brand) {
-        if (brandRepository.findById(brand.getId()).isEmpty()) {
-            return false;
+    public Model insertModel(Model entity) throws BadRequestException {
+        Optional<Brand> modelBrand = brandRepository.findById(entity.getBrandId());
+        if (modelBrand.isPresent()) {
+            super.insert(entity);
+            Model savedModel = super.save(entity);
+            modelBrand.get().addModel(savedModel);
+            brandRepository.save(modelBrand.get());
+            return savedModel;
         }
-        return true;
-    }
-
-    private Boolean validateBrandFields(Brand brand) {
-        Optional<Brand> comparison = brandRepository.findById(brand.getId());
-        if (comparison.isPresent()) {
-            Brand retrievedBrand = comparison.get();
-            return retrievedBrand.equals(brand);
-        }
-        return true;
+        throw new BadRequestException("Brand not found");
     }
 
     @Override
-    public Model insert(Model model) throws BadRequestException {
-        if (!validateBrand(model.getBrand())) {
-            throw new BadRequestException("The brand informed does not exist");
-        }
-        return super.insert(model);
-    }
+    public void delete(String id) throws BadRequestException {
+        // TODO Auto-generated method stub
+        Optional<Model> model = super.findById(id);
+        if (model.isPresent()) {
+            Optional<Brand> brand = brandRepository.findById(model.get().getBrandId());
+            if (brand.isPresent() && brand.get().getModels().remove(model.get())) {
 
-    public Model update(Model model) throws BadRequestException {
-        if (!validateBrandFields(model.getBrand())) {
-            throw new BadRequestException("The brand informed does not exist or illegaly modified");
+                brandRepository.save(brand.get());
+
+            }
         }
-        return super.save(model);
+        super.delete(id);
     }
 
 }

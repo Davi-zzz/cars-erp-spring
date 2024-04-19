@@ -18,19 +18,24 @@ public class BaseService<T extends BaseModel> {
     }
 
     public T insert(T entity) throws BadRequestException {
-        return repository.insert(entity);
+        try {
+            return repository.insert(entity);
+
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
     }
 
     public T save(T result) {
         return repository.save(result);
     }
 
-    public void delete(String id) {
+    public void delete(String id) throws BadRequestException {
         try {
             repository.deleteById(id);
 
         } catch (Exception e) {
-            throw new Error(e.getMessage());
+            throw new BadRequestException(e.getMessage());
         }
     }
 
