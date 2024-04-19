@@ -1,9 +1,8 @@
 package com.example.apollo.models;
 
 import org.springframework.boot.jackson.JsonComponent;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.mongodb.lang.NonNull;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,8 +12,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public @Data class Model extends BaseModel {
 
-    public Model(Brand brand, String name, float fipeValue) {
-        this.brand = brand;
+    public Model(String name, float fipeValue) {
         this.name = name;
         this.fipeValue = fipeValue;
     }
@@ -23,8 +21,34 @@ public @Data class Model extends BaseModel {
 
     }
 
-    Brand brand;
-    String name;
-    float fipeValue;
+    private String brandId;
+    private String name;
+    private float fipeValue;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Model model = (Model) obj;
+        return id.equals(model.getId()) && brandId.equals(model.getBrandId()) && name.equals(model.getName())
+                && fipeValue == model.getFipeValue();
+
+    }
+
+    public boolean equalsIds(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Model model = (Model) obj;
+        return id.equals(model.getId()) && brandId.equals(model.getBrandId());
+
+    }
 
 }

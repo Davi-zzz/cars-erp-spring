@@ -1,9 +1,11 @@
 package com.example.apollo.models;
 
-import org.springframework.boot.jackson.JsonComponent;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.mongodb.lang.NonNull;
+import org.springframework.boot.jackson.JsonComponent;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -15,13 +17,20 @@ import lombok.EqualsAndHashCode;
 public @Data class Brand extends BaseModel {
 
     public Brand(String name) {
-        this.brandName = name;
+        this.name = name;
+        this.models = new ArrayList<>();
     }
 
     public Brand() {
     }
 
     @NotBlank
-    String brandName;
+    private String name;
+    @DBRef
+    private List<Model> models;
+
+    public void addModel(Model model) {
+        this.models.add(model);
+    }
 
 }
