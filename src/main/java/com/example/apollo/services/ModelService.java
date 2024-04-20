@@ -13,8 +13,6 @@ import com.example.apollo.repository.BrandRepository;
 @Service
 public class ModelService extends BaseService<Model> {
 
-    // TODO: refatorar a manipulacao de relacionamentos do projeto
-
     @Autowired
     private BrandRepository brandRepository;
 

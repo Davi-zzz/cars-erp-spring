@@ -1,7 +1,6 @@
 package com.example.apollo.models;
 
 import org.springframework.boot.jackson.JsonComponent;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
